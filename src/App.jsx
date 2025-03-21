@@ -6,14 +6,21 @@ import Feedback from "./components/Feedback/Feedback";
 
 import "./App.css";
 
+const OPTIONS = {
+  good: 0,
+  neutral: 0,
+  bad: 0,
+};
+
 function App() {
-  const [feedback, setFeedback] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  });
+  const [feedback, setFeedback] = useState(OPTIONS);
 
   const updateFeedback = (option) => {
+    if (option === "reset") {
+      setFeedback(OPTIONS);
+      return;
+    }
+
     setFeedback((prevFeedback) => ({
       ...prevFeedback,
       [option]: prevFeedback[option] + 1,
