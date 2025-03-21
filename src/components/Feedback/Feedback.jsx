@@ -6,7 +6,7 @@ const Feedback = ({ feedback, total, positivePercentage }) => {
           <li key={index}>{`${key}: ${feedback[key]}`}</li>
         ))}
         <li>{`Total: ${total}`}</li>
-        <li>{`Positive feedback: ${positivePercentage}%`}</li>
+        <li>{`Positive: ${positivePercentage}%`}</li>
       </ul>
     </div>
   );
