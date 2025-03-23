@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-
 import Description from "./components/Description/Description";
 import Options from "./components/Options/Options";
 import Feedback from "./components/Feedback/Feedback";
 import Notification from "./components/Notification/Notification";
+import useLocalStorage from "./hooks/useLocalStorage";
+import useFormulas from "./hooks/useFormulas";
 
 import "./App.css";
 
@@ -14,24 +14,8 @@ const OPTIONS = {
 };
 
 function App() {
-  const [feedback, setFeedback] = useState(() => {
-    const savedFeedback = localStorage.getItem("feedback");
-
-    if (savedFeedback) {
-      return JSON.parse(savedFeedback);
-    }
-
-    return OPTIONS;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("feedback", JSON.stringify(feedback));
-  }, [feedback]);
-
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positivePercentage = totalFeedback
-    ? Math.round((feedback.good / totalFeedback) * 100)
-    : 0;
+  const [feedback, setFeedback] = useLocalStorage("feedback", OPTIONS);
+  const { totalFeedback, positivePercentage } = useFormulas({ feedback });
 
   const updateFeedback = (option) => {
     if (option === "reset") {
